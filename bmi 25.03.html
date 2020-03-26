@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+
+    <style>
+
+        
+        #weightError {
+            display: none;
+            color: red;
+            font-family: Arial, Helvetica, sans-serif;
+            font: bold;
+
+        }
+
+        #heightError {
+            display: none;
+            color: red;
+            font-family: Arial, Helvetica, sans-serif;
+            font: bold;
+        }
+
+        #result {
+            color: green;
+            font-family: Arial, Helvetica, sans-serif;
+            font: bold;
+            background-color: white;
+        }
+
+        body {
+
+            
+            background: url(https://smrunners.files.wordpress.com/2016/08/run_person_speed_23756_3840x2400.jpg);
+            background-size: cover;
+            align-items: center;
+            text-align: center;
+            margin-top: 200px;
+        }
+        h1{
+            font-family: Arial, Helvetica, sans-serif;
+            
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>BMI CALCULATOR</h1>
+
+
+    <script>
+        function calcBMI(weight, height) {
+            return weight / (height * height) * 10000 // (height/100)^2
+        }
+
+        function checkInput(parameter, min, max, errorElement) {
+
+            let errorParagraph = document.getElementById(errorElement)
+
+            if (parameter >= min && parameter <= max) {
+                errorParagraph.style.display = 'none'
+                return true
+            } else {
+                errorParagraph.style.display = 'block'
+
+                return false
+            }
+        }
+
+
+        function checkBMI() {
+            let weight = document.getElementById('weight').value;
+            let height = document.getElementById('height').value;
+
+
+            if (
+                checkInput(weight, 30, 200, 'weightError') ||
+                checkInput(height, 120, 220, 'heightError')
+            ) {
+
+                let BMIResult = calcBMI(weight, height);
+
+                switch (true)
+
+                {
+                    case BMIResult < 18.5: // true / false
+                        document.getElementById('result').innerHTML = "תת משקל " + BMIResult;
+
+                        break;
+
+
+
+                    case BMIResult < 25:
+
+                        document.getElementById('result').innerHTML = "משקל תקין " + BMIResult;
+
+                        break;
+
+
+                    case BMIResult < 29.9:
+                        document.getElementById('result').innerHTML = "משקל עודף " + BMIResult;
+
+                        break;
+
+
+                    case BMIResult < 34.9:
+                        document.getElementById('result').innerHTML = "השמנה דרגה 1 " + BMIResult;
+
+                        break;
+
+                    case BMIResult < 39.9:
+                        document.getElementById('result').innerHTML = "השמנה דרגה 2 " + BMIResult;
+
+                        break;
+
+                    default:
+                        document.getElementById('result').innerHTML = "השמנה דרגה 3 " + BMIResult;
+                        break;
+
+
+
+
+                }
+                // document.getElementById('result').innerHTML 
+                // = calcBMI(weight,height);
+            }
+        }
+    </script>
+
+    Weight: <input type="text" id="weight" onchange="checkInput(this.value, 30, 200, 'weightError')">
+    <p id="weightError">שדה משקל לא חוקי</p>
+    Height: <input type="text" id="height" onchange="checkInput(this.value, 120, 220, 'heightError')">
+    <p id="heightError">שדה גובה לא חוקי</p>
+
+
+    <br>
+    <br>
+
+    <button type="button" onclick="checkBMI()">
+        Calculate your BMI
+    </button>
+    <p id="result"></p>
+
+
+</body>
+</div>
+
+</html>
